@@ -14,8 +14,8 @@ server.
 ## ⚡️ Requirements
 
 - Neovim >= 0.12.0
-- Roslyn language server downloaded locally
 - .NET SDK installed and `dotnet` command available
+- Roslyn language server installed either via the global `roslyn-language-server` tool, Mason, or a manual package download
 
 ## Difference to nvim-lspconfig
 
@@ -70,16 +70,24 @@ There's currently an open [pull request](https://github.com/mason-org/mason-regi
 <details>
   <summary>Manually</summary>
 
-NOTE: The manual installation instructions are the same for this plugin and for nvim-lspconfig.
-The following instructions are copied from [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#roslyn_ls).
-If the installation instructions are not up-to-date or not clear, please first send a PR to `nvim-lspconfig` with improvements so that we can align the installation instructions.
+Recommended manual install:
 
-To install the server, compile from source or download as nuget package.
+```sh
+dotnet tool install --global roslyn-language-server --prerelease
+```
+
+This installs the `roslyn-language-server` executable, which `roslyn.nvim` now detects automatically.
+
+Compatibility fallback:
+
+NOTE: The package-download instructions below are still valid for older/manual setups and are aligned with [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md#roslyn_ls).
+
+To install the server from a package, compile from source or download the NuGet package.
 Go to `https://dev.azure.com/azure-public/vside/_artifacts/feed/vs-impl/NuGet/Microsoft.CodeAnalysis.LanguageServer.<platform>/overview`
 replace `<platform>` with one of the following `linux-x64`, `osx-x64`, `win-x64`, `neutral` (for more info on the download location see https://github.com/dotnet/roslyn/issues/71474#issuecomment-2177303207).
-Download and extract it (nuget's are zip files).
+Download and extract it (nuget packages are zip files).
 
-- if you chose `neutral` nuget version, then you have to change the `cmd` like so:
+- if you chose the `neutral` package, then you have to change the `cmd` like so:
 
 ```lua
 cmd = {

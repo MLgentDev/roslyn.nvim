@@ -1,5 +1,18 @@
 local M = {}
 
+function M.get_roslyn_executables()
+    local sysname = vim.uv.os_uname().sysname:lower()
+    local iswin = not not (sysname:find("windows") or sysname:find("mingw"))
+    local mason_bin = vim.fs.joinpath(M.get_mason_path(), "bin", iswin and "roslyn.cmd" or "roslyn")
+
+    return {
+        "roslyn-language-server",
+        mason_bin,
+        iswin and "roslyn.cmd" or "roslyn",
+        "Microsoft.CodeAnalysis.LanguageServer",
+    }
+end
+
 function M.find_razor_extension_path()
     local mason_path = M.get_mason_path()
     local mason_packages = vim.fs.joinpath(mason_path, "packages")
